@@ -1,0 +1,24 @@
+{
+    "request": {
+        "method": "POST",
+        "url": "/api"
+    },
+    "response": {
+        "body": "{{jsonPath request.body '$.args.[0].request_token'}}",
+        "transformers": [
+            "response-template",
+            "webhook"
+        ],
+        "status": 200
+    },
+    "postServeActions": {
+        "webhook": {
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "method": "POST",
+            "body": "{ \"result\": \"SUCCESS\" }",
+            "url": "http://localhost:8080/callback"
+        }
+    }
+}

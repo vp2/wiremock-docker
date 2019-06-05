@@ -23,13 +23,16 @@ RUN set -x \
 	&& gosu nobody true
 
 # grab wiremock standalone jar
-RUN mkdir -p /var/wiremock/lib/ \
-  && wget https://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-jre8-standalone/$WIREMOCK_VERSION/wiremock-jre8-standalone-$WIREMOCK_VERSION.jar \
-    -O /var/wiremock/lib/wiremock-jre8-standalone.jar
+#RUN mkdir -p /var/wiremock/lib/ \
+#  && wget https://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-jre8-standalone/$WIREMOCK_VERSION/wiremock-jre8-standalone-$WIREMOCK_VERSION.jar \
+#    -O /var/wiremock/lib/wiremock-jre8-standalone.jar
+
 
 WORKDIR /home/wiremock
 
+COPY wiremock-2.23.2-all.jar /var/wiremock/lib/wiremock-jre8-standalone.jar
 COPY docker-entrypoint.sh /
+COPY wiremock-webhooks-extension-1.0.0-all.jar /var/wiremock/lib/
 
 VOLUME /home/wiremock
 EXPOSE 8080 8443
